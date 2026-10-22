@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="zh-TW" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+  <title>Modern Dashboard UI Skill｜萬用現代網頁與雙主題戰情室設計範本</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Noto+Sans+TC:wght@400;500;600;700;900&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Noto Sans TC"', 'system-ui', '-apple-system', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          }
+        }
+      }
+    };
+  </script>
+  <style>
+    :root {
+      --bg-main: #060b14;
+      --text-main: #e2e8f0;
+    }
+    html.light {
+      --bg-main: #f8fafc;
+      --text-main: #0f172a;
+    }
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: 'Noto Sans TC', system-ui, sans-serif;
+      min-height: 100vh;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+    /* 明亮護眼模式自動色彩反轉調適 */
+    html.light .bg-\[\#070d19\]\/90,
+    html.light .bg-\[\#070d19\]\/95 { background-color: rgba(255, 255, 255, 0.94) !important; }
+    html.light .bg-\[\#0b1323\],
+    html.light .bg-\[\#0b1323\]\/90,
+    html.light .bg-\[\#0b1323\]\/95 {
+      background-color: #ffffff !important;
+      border-color: #cbd5e1 !important;
+      box-shadow: 0 4px 20px -2px rgba(15, 23, 42, 0.06) !important;
+    }
+    html.light .bg-slate-900,
+    html.light .bg-slate-900\/90,
+    html.light .bg-slate-900\/80,
+    html.light .bg-slate-900\/60 {
+      background-color: #f1f5f9 !important;
+      border-color: #cbd5e1 !important;
+      color: #0f172a !important;
+    }
+    html.light .bg-slate-800,
+    html.light .bg-slate-800\/90 {
+      background-color: #e2e8f0 !important;
+      border-color: #cbd5e1 !important;
+      color: #1e293b !important;
+    }
+    html.light .text-white,
+    html.light .text-slate-100,
+    html.light .text-slate-200 { color: #0f172a !important; }
+    html.light .text-slate-300,
+    html.light .text-slate-400 { color: #475569 !important; }
+    html.light .text-cyan-300,
+    html.light .text-cyan-400 { color: #0369a1 !important; }
+    html.light .text-amber-300,
+    html.light .text-amber-400 { color: #b45309 !important; }
+    html.light .text-emerald-300,
+    html.light .text-emerald-400 { color: #047857 !important; }
+    html.light .text-rose-300,
+    html.light .text-rose-400 { color: #be123c !important; }
+    html.light .bg-emerald-950\/70 { background-color: #ecfdf5 !important; color: #065f46 !important; }
+    html.light .bg-amber-950\/20 { background-color: #fffbeb !important; color: #92400e !important; }
+    html.light .bg-cyan-950\/20,
+    html.light .bg-cyan-950\/80 { background-color: #f0f9ff !important; color: #075985 !important; }
+
+    button, label, select, input {
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+    }
+    @media (max-width: 1023px) {
+      body { padding-bottom: 76px; }
+    }
+  </style>
+</head>
+<body class="selection:bg-cyan-500/30 antialiased">
+
+  <!-- 頂部毛玻璃導覽列 -->
+  <header class="sticky top-0 z-30 border-b border-slate-800/80 bg-[#070d19]/90 backdrop-blur-md">
+    <div class="max-w-[1600px] mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500/20 to-emerald-500/20 border border-cyan-500/40 flex items-center justify-center text-lg shadow-lg">
+          🎨
+        </div>
+        <div>
+          <div class="flex items-center gap-2">
+            <h1 class="text-base sm:text-lg font-black tracking-wide text-white">
+              Modern Dashboard UI <span class="text-cyan-400">萬用網頁設計規範展示室</span>
+            </h1>
+            <span class="hidden md:inline-flex items-center px-2 py-0.5 rounded text-[11px] font-mono font-bold bg-cyan-500/15 text-cyan-300 border border-cyan-500/30">
+              v1.0 Starter Kit
+            </span>
+          </div>
+          <p class="text-xs text-slate-400 hidden sm:block">
+            深淺雙主題切換 ‧ 12欄黃金比例 ‧ 拒絕文字牆三層濾鏡 ‧ 行動裝置拇指熱區導覽
+          </p>
+        </div>
+      </div>
+
+      <div class="flex items-center flex-wrap gap-2">
+        <!-- 雙主題切換 -->
+        <button onclick="toggleTheme()" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-bold text-xs sm:text-sm bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 transition">
+          <span id="theme-icon">🌙</span>
+          <span id="theme-label">切換明亮護眼模式</span>
+        </button>
+
+        <!-- 速查表彈窗按鈕 -->
+        <button onclick="openModal()" class="flex items-center gap-1.5 px-3.5 py-2 rounded-xl font-bold text-xs sm:text-sm bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 shadow-lg shadow-amber-500/20 transition">
+          <span>⚡</span>
+          <span>一鍵複製 AI 設計指令</span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="max-w-[1600px] mx-auto px-4 sm:px-6 py-5 space-y-5">
+
+    <!-- 1. 頂部 KPI 與弱點雷達卡片展示 -->
+    <section class="bg-[#0b1323]/90 border border-slate-800/90 rounded-2xl p-4 shadow-xl space-y-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center gap-2">
+          <span class="w-2 h-5 rounded-full bg-cyan-400"></span>
+          <h2 class="text-sm font-bold text-slate-200">規範一：語義化四色 KPI 雷達卡片（數據強制使用 JetBrains Mono 等寬字體）</h2>
+        </div>
+      </div>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+        <!-- 翡翠綠：正常/高分 -->
+        <div class="p-3.5 rounded-xl border border-slate-800 bg-slate-900/60 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-200">🟢 翡翠綠 (Success / 達標)</span>
+            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">92%</span>
+          </div>
+          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div class="h-full bg-emerald-500" style="width: 92%"></div>
+          </div>
+        </div>
+        <!-- 醫療青：主要資訊 -->
+        <div class="p-3.5 rounded-xl border border-cyan-500/40 bg-slate-900 space-y-2">
+          <div class="flex items-start justify-between">
+            <span class="text-xs font-bold text-slate-200">🔵 醫療青 (Primary / 焦點)</span>
+            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">104 題</span>
+          </div>
+          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div class="h-full bg-cyan-500" style="width: 78%"></div>
+          </div>
+        </div>
+        <!-- 琥珀黃：注意/警示 -->
+        <div class="p-3.5 rounded-xl border border-amber-500/40 bg-slate-900/60 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-200">🟡 琥珀黃 (Warning / 待加強)</span>
+            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/40">65%</span>
+          </div>
+          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div class="h-full bg-amber-500" style="width: 65%"></div>
+          </div>
+        </div>
+        <!-- 珊瑚紅：危險/高優先 -->
+        <div class="p-3.5 rounded-xl border border-rose-500/40 bg-slate-900/60 space-y-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold text-slate-200">🔴 珊瑚紅 (Danger / 弱點警示)</span>
+            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-rose-500/20 text-rose-300 border border-rose-500/40">48%</span>
+          </div>
+          <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+            <div class="h-full bg-rose-500" style="width: 48%"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. 雙欄黃金比例主工作區 (左 7 欄 + 右 5 欄) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-5 items-start">
+
+      <!-- 左欄 (7 cols) -->
+      <section class="lg:col-span-7 bg-[#0b1323]/95 border border-slate-800/90 rounded-2xl p-5 sm:p-6 shadow-2xl space-y-4">
+        <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-mono font-bold px-2.5 py-1 rounded-lg bg-cyan-500/15 text-cyan-300 border border-cyan-500/40">LEFT PANE (7 Cols)</span>
+            <h3 class="text-base font-black text-white">主互動與視覺內容區</h3>
+          </div>
+          <span class="text-xs font-mono text-slate-400">min-height: 44px tap targets</span>
+        </div>
+
+        <p class="text-sm sm:text-base text-slate-200 leading-relaxed">
+          在桌機寬螢幕上採用 <code class="px-1.5 py-0.5 rounded bg-cyan-950/80 text-cyan-300 font-mono text-xs border border-cyan-500/30">lg:grid-cols-12</code> 雙欄並列（左 7 右 5），讓使用者左眼看題目或圖表、右眼直接對照決策流程圖，完全不需要上下來回捲動網頁！
+        </p>
+
+        <!-- 互動選項按鈕展示 -->
+        <div class="space-y-2.5">
+          <div class="w-full text-left p-3.5 rounded-xl border-2 bg-emerald-950/70 border-emerald-500/70 text-emerald-100 flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-emerald-500 text-slate-950 font-mono font-black flex items-center justify-center text-xs">A</span>
+            <span class="text-sm sm:text-base font-medium flex-1">選中正確或推薦項目時的高對比翡翠綠視覺回饋</span>
+            <span class="text-xs font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/40">✓ Active</span>
+          </div>
+          <div class="w-full text-left p-3.5 rounded-xl border-2 bg-slate-900/80 border-slate-800 text-slate-200 flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-slate-800 text-slate-300 border border-slate-700 font-mono font-bold flex items-center justify-center text-xs">B</span>
+            <span class="text-sm sm:text-base font-medium flex-1">一般待命選項按鈕（觸控高度 ≥ 44px，消除手機 300ms 點擊延遲）</span>
+          </div>
+        </div>
+
+        <!-- 整合這個 Skill 的四種方式 -->
+        <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-4 space-y-2 text-xs sm:text-sm">
+          <div class="font-bold text-amber-300">💡 如何把這套網頁設計 Skill 分享給朋友或自己的其他專案？</div>
+          <ul class="space-y-1.5 text-slate-300 list-disc pl-5">
+            <li><b class="text-white">方式 1（Antigravity / Claude Code / Cursor 使用者）</b>：將 <code class="px-1.5 py-0.5 rounded bg-cyan-950/80 text-cyan-300 font-mono text-xs border border-cyan-500/30">SKILL.md</code> 放進 <code class="px-1.5 py-0.5 rounded bg-cyan-950/80 text-cyan-300 font-mono text-xs border border-cyan-500/30">~/.gemini/config/skills/modern-dashboard-ui-skill/</code>，AI 就會自動學會全套設計規範。</li>
+            <li><b class="text-white">方式 2（任何 AI 聊天視窗如 ChatGPT / Gemini）</b>：點擊右上角「<b class="text-amber-300">⚡ 一鍵複製 AI 設計指令</b>」，直接貼給 AI 即可生成同款雙主題網頁！</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 右欄 (5 cols)：演算法節點圖 + 三層正則高亮卡片 -->
+      <aside class="lg:col-span-5 space-y-4">
+        <!-- ① 演算法決策路徑節點圖展示 -->
+        <div class="bg-[#0b1323]/95 border border-emerald-500/30 rounded-2xl p-5 shadow-xl space-y-3">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="w-6 h-6 rounded-lg bg-emerald-500/20 border border-emerald-500/40 flex items-center justify-center text-emerald-300 text-xs font-black">1</span>
+              <h3 class="text-sm font-black text-emerald-300">規範二：漸層進程節點圖（終點自動翡翠綠高亮）</h3>
+            </div>
+          </div>
+          <div class="space-y-1">
+            <div class="rounded-xl p-3 border bg-slate-900/90 border-slate-700/90 text-slate-200 flex items-start gap-2.5 text-xs sm:text-sm">
+              <span class="w-5 h-5 rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 flex items-center justify-center text-[11px] font-mono font-bold shrink-0 mt-0.5">1</span>
+              <div>Step 1：接收原始資料或複雜長篇文字輸入</div>
+            </div>
+            <div class="flex items-center justify-center py-0.5"><div class="w-0.5 h-3.5 bg-gradient-to-b from-cyan-400 to-emerald-400"></div></div>
+            <div class="rounded-xl p-3 border bg-slate-900/90 border-slate-700/90 text-slate-200 flex items-start gap-2.5 text-xs sm:text-sm">
+              <span class="w-5 h-5 rounded-md bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 flex items-center justify-center text-[11px] font-mono font-bold shrink-0 mt-0.5">2</span>
+              <div>Step 2：拆解為結構化思考節點與條列重點卡片</div>
+            </div>
+            <div class="flex items-center justify-center py-0.5"><div class="w-0.5 h-3.5 bg-gradient-to-b from-cyan-400 to-emerald-400"></div></div>
+            <div class="rounded-xl p-3 border bg-emerald-950/70 border-emerald-400/70 text-emerald-100 font-bold shadow-md flex items-start gap-2.5 text-xs sm:text-sm">
+              <span class="w-5 h-5 rounded-md bg-emerald-400 text-slate-950 flex items-center justify-center text-[11px] font-mono font-bold shrink-0 mt-0.5">3</span>
+              <div>最終決策節點（isLast）：自動套用翡翠綠高對比邊框，一眼鎖定核心結論！</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- ② 三層正則文字高亮濾鏡展示 -->
+        <div class="bg-[#0b1323]/95 border border-amber-500/40 rounded-2xl p-5 shadow-xl space-y-3">
+          <div class="flex items-center gap-2">
+            <span class="w-6 h-6 rounded-lg bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-amber-300 text-xs font-black">2</span>
+            <h3 class="text-sm font-black text-amber-300">規範三：拒絕文字牆！三層 Regex 自動變色濾鏡</h3>
+          </div>
+          <ul class="space-y-2 text-xs sm:text-sm text-slate-200 leading-relaxed">
+            <li class="flex items-start gap-2 bg-amber-950/20 border border-amber-500/20 rounded-xl p-3">
+              <span class="text-amber-400 font-bold mt-0.5">▸</span>
+              <span>第一層濾鏡：將 <strong class="text-amber-300 font-bold">**星號粗體文字**</strong> 自動轉為琥珀黃重點強調色。</span>
+            </li>
+            <li class="flex items-start gap-2 bg-cyan-950/20 border border-cyan-500/20 rounded-xl p-3">
+              <span class="text-cyan-400 font-bold mt-0.5">✔</span>
+              <span>第二、三層濾鏡：將 <code class="px-1.5 py-0.5 rounded bg-cyan-950/80 text-cyan-300 font-mono text-xs border border-cyan-500/30">`反引號口訣`</code> 轉為等寬膠囊框，並自動高亮專有名詞字典。</span>
+            </li>
+          </ul>
+        </div>
+      </aside>
+    </div>
+  </main>
+
+  <!-- 一鍵複製 AI Prompt 彈窗 -->
+  <div id="prompt-modal" class="hidden fixed inset-0 z-50 bg-slate-950/85 backdrop-blur-md flex items-center justify-center p-4">
+    <div class="bg-[#0b1323] border border-amber-500/40 rounded-2xl max-w-3xl w-full p-5 space-y-4 shadow-2xl">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <h3 class="text-base font-black text-white">⚡ 一鍵複製「萬用雙主題戰情室網頁設計 Prompt」</h3>
+        <button onclick="closeModal()" class="px-3 py-1 rounded-lg bg-slate-800 text-slate-300 text-xs font-bold">✕ 關閉</button>
+      </div>
+      <p class="text-xs text-slate-400">將下方指令複製貼給任何 AI（Antigravity / Claude / ChatGPT / Cursor），即可要求它用這套視覺標準幫你設計網頁：</p>
+      <textarea id="prompt-textarea" readonly rows="9" class="w-full bg-slate-900 border border-slate-700 rounded-xl p-3 text-xs font-mono text-cyan-300 focus:outline-none">請採用「Modern Dashboard UI 雙主題戰情室設計規範」為我開發單頁式網頁（SPA）：
+1. 視覺與雙主題：使用 Tailwind CSS，預設深色戰情室風格（#060b14 背景、#0b1323 卡片、毛玻璃頂部導覽列），並在導覽列提供「🌙 深色戰情室 / ☀️ 明亮護眼」一鍵切換按鈕。
+2. 字體雙軌制：中文與內文使用 Noto Sans TC，所有數據、編號、百分比強制使用 JetBrains Mono 等寬字體。
+3. 雙欄響應式排版：桌機採用 lg:grid-cols-12（左 7 欄主內容互動區、右 5 欄視覺化流程節點圖與重點拆解卡），手機自動轉為單欄並提供底部常駐懸浮快速操作列（Sticky Bottom Bar）。
+4. 拒絕文字牆：將步驟拆解為編號進程節點圖（最後一步以翡翠綠發光邊框高亮），並將長文拆分為條列卡片，自動將 **粗體** 染為琥珀黃、`代碼口訣` 轉為青色膠囊框。
+5. 零伺服器離線支援：避免使用會被 file:// CORS 阻擋的 fetch，確保雙擊 index.html 即可離線執行。</textarea>
+      <div class="flex justify-end gap-2">
+        <button onclick="copyPromptText()" id="copy-btn" class="px-4 py-2 rounded-xl text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 transition">
+          📋 複製這段設計指令
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 手機底部懸浮導覽列展示 -->
+  <nav class="lg:hidden fixed bottom-0 inset-x-0 z-40 bg-[#070d19]/95 backdrop-blur-md border-t border-slate-800 px-3 py-2.5 shadow-2xl">
+    <div class="max-w-xl mx-auto grid grid-cols-3 gap-2">
+      <button onclick="toggleTheme()" class="py-2.5 px-2 rounded-xl text-xs font-bold bg-slate-800 text-slate-200 border border-slate-700">🌙/☀️ 切換主題</button>
+      <button onclick="openModal()" class="py-2.5 px-2 rounded-xl text-xs font-bold bg-amber-500 text-slate-950">⚡ 複製指令</button>
+      <button onclick="window.scrollTo({top:0,behavior:'smooth'})" class="py-2.5 px-2 rounded-xl text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">↑ 回到頂部</button>
+    </div>
+  </nav>
+
+  <script>
+    let isLight = false;
+    function toggleTheme() {
+      isLight = !isLight;
+      const html = document.documentElement;
+      html.classList.toggle('light', isLight);
+      html.classList.toggle('dark', !isLight);
+      document.getElementById('theme-icon').textContent = isLight ? '☀️' : '🌙';
+      document.getElementById('theme-label').textContent = isLight ? '切換深色戰情室' : '切換明亮護眼模式';
+    }
+    function openModal() { document.getElementById('prompt-modal').classList.remove('hidden'); }
+    function closeModal() { document.getElementById('prompt-modal').classList.add('hidden'); }
+    function copyPromptText() {
+      const el = document.getElementById('prompt-textarea');
+      el.select();
+      navigator.clipboard.writeText(el.value);
+      const btn = document.getElementById('copy-btn');
+      btn.textContent = '✅ 已複製到剪貼簿！';
+      setTimeout(() => { btn.textContent = '📋 複製這段設計指令'; }, 2000);
+    }
+  </script>
+</body>
+</html>
